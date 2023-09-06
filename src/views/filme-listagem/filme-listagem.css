@@ -1,5 +1,6 @@
 /*CSS do BootStrap*/
 @import url("bootstrap/dist/css/bootstrap.min.css");
+@import url("bootstrap-icons/font/bootstrap-icons.min.css");
 h1 {
   color: #2391ff;
 }
