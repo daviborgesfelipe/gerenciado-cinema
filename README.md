@@ -9,7 +9,7 @@
 
   <br>
 
-  <h1>Projeto Webpack Base</h1>
+  <h1>Projeto Code-cine</h1>
   <p>
     Template de projeto Webpack com TypeScript.
   </p>
