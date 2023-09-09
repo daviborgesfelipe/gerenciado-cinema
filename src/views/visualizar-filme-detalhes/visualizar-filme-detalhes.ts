@@ -114,7 +114,7 @@ exibirCredito(creditos: CreditosFilme[]): void {
       trDepartamento.appendChild(tdDepartamento);
 
       const tdNomes = document.createElement("td");
-      tdNomes.innerText = creditosPorDepartamento[departamento].join(" - "); // Concatena os nomes
+      tdNomes.innerText = creditosPorDepartamento[departamento].join("- "); // Concatena os nomes
       tdNomes.classList.add("text-end")
       trDepartamento.appendChild(tdNomes);
 
@@ -132,15 +132,18 @@ exibirCredito(creditos: CreditosFilme[]): void {
 exibirFilme(filme: DetalhesFilme): any {
   this.exibirDetalhesFilme(filme)
   this.exibirConteudo(filme)
+  this.exibirVisalGeralGenero(filme)
 }
 
 exibirDetalhesFilme(filme: DetalhesFilme): any {
+
   const lbTituloFilme = document.createElement("h1");
   lbTituloFilme.textContent = filme.titulo;
   lbTituloFilme.classList.add(
     "fs-1",
     "fw-bold",
-    "text-warning"
+    "text-warning",
+    "w-100"
   )
   
   const lbNota = document.createElement("p")
@@ -149,7 +152,10 @@ exibirDetalhesFilme(filme: DetalhesFilme): any {
 
   const lbVotos = document.createElement("p");
   lbVotos.textContent = `${filme.contageVotos} votos`
-  lbVotos.classList.add("text-warning")
+  lbVotos.classList.add(
+    "text-warning",
+    "fs-6"
+  )
   
   const iconFavorito = document.createElement("i")
   iconFavorito.classList.add(
@@ -160,29 +166,46 @@ exibirDetalhesFilme(filme: DetalhesFilme): any {
   )
   
   const divFavoritos = document.createElement("div")
-  divFavoritos.classList.add("ms-auto", "text-end")
+  divFavoritos.classList.add(
+  "ms-auto",
+  "text-end",
+  "w-50"
+  )
   
   divFavoritos.appendChild(lbNota)
   divFavoritos.appendChild(lbVotos)
   divFavoritos.appendChild(iconFavorito)
   
   const conteudoCabecalho = document.createElement("div")
-  conteudoCabecalho.classList.add("d-flex", "align-itens-center")
+  conteudoCabecalho.classList.add(
+    "d-flex",
+    "align-itens-center",
+    "w-100",
+    "justify-content-between"
+  )
   
   conteudoCabecalho.appendChild(lbTituloFilme)
   conteudoCabecalho.appendChild(divFavoritos)
 
   const smallDataLancamento = document.createElement("small")
-  smallDataLancamento.classList.add("fs-5", "text-warning")
+  smallDataLancamento.classList.add(
+    "fs-5",
+    "text-warning"
+  )
   smallDataLancamento.innerText = filme.dataLancamento
   
   const cabelhado = document.createElement("div")
-  cabelhado.classList.add("row")
+  cabelhado.classList.add(
+    "row", "justify-content-between"
+  )
   
   cabelhado.appendChild(conteudoCabecalho)
-  cabelhado.appendChild(smallDataLancamento)
-  
-  
+    
+  this.pnlCabecalho.appendChild(cabelhado)
+  this.pnlCabecalho.appendChild(smallDataLancamento)
+
+}
+exibirVisalGeralGenero(filme: DetalhesFilme){
   const paragrafoVisaoGeral = document.createElement("p");
   paragrafoVisaoGeral.classList.add(
     "fs-5",
@@ -203,12 +226,12 @@ exibirDetalhesFilme(filme: DetalhesFilme): any {
       "bg-warning",
       "text-dark",
       "my-2"
+
     )
     spanGenero.innerText = genero[contador];
     this.pnlGenero.appendChild(spanGenero)
   }
     
-  this.pnlCabecalho.appendChild(cabelhado)
   this.pnlDescricao.appendChild(paragrafoVisaoGeral)
 }
 
@@ -242,8 +265,6 @@ exibirConteudo(filme: DetalhesFilme) {
   
   this.pnlImgVideo.appendChild(divImg)
 }
-
-
 
 }
 
