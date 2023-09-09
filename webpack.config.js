@@ -7,8 +7,8 @@ module.exports = {
 
   // O ponto de entrada da aplicação
   entry: {
-    index: path.resolve(__dirname, 'src/views', 'filme-listagem', 'filme-listagem.ts'),
-    detalhes: path.resolve(__dirname, 'src/views', 'filme-detalhes', 'filme-detalhes.ts')
+    index: path.resolve(__dirname, 'src/views', 'visualizar-filme-listagem', 'visualizar-filme-listagem.ts'),
+    detalhes: path.resolve(__dirname, 'src/views', 'visualizar-filme-detalhes', 'visualizar-filme-detalhes.ts')
 
   },
 
@@ -44,13 +44,13 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       filename: 'index.html',
-      template: path.resolve(__dirname, 'src/views', 'filme-listagem', 'filme-listagem.html'),
+      template: path.resolve(__dirname, 'src/views', 'visualizar-filme-listagem', 'visualizar-filme-listagem.html'),
       chunks: ['index']
     }),
 
     new HtmlWebpackPlugin({
       filename: 'detalhes.html',
-      template: path.resolve(__dirname, 'src/views', 'filme-detalhes', 'filme-detalhes.html'),
+      template: path.resolve(__dirname, 'src/views', 'visualizar-filme-detalhes', 'visualizar-filme-detalhes.html'),
       chunks: ['detalhes']
     }),
 
