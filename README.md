@@ -28,9 +28,7 @@ Na pasta do projeto, instale as dependências:
 npm install
 ```
 
-<h2 align="center">Link</h2>
-
-:
+<h2 align="center">Link GitHub Pages</h2>
 
 ```bash
 https://daviborgesfelipe.github.io/gerenciado-cinema/
