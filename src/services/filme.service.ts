@@ -9,7 +9,7 @@ export class FilmeService {
 
   constructor()
   {
-    fetch(`https://api.themoviedb.org/3/movie/615656?language=pt-br`,
+    fetch(`https://api.themoviedb.org/3/movie/61656/credits`,
     this.obterHeaderAutorizacao())
       .then((res) => res.json())
       .then((obj) => console.log("testeMovieApi", obj))
@@ -39,31 +39,27 @@ export class FilmeService {
     .then((obj: any): TrailerFilme[] => this.mapearTrailerFilmes(obj.results));
   }
 
-  // public selecionarCreditosFilmePorId(id: number): Promise<CreditosFilme[]> {
-  //   const url = `https://api.themoviedb.org/3/movie/${id}/credits`;
+  public selecionarCreditosFilmePorId(id: number): Promise<CreditosFilme[]> {
+    const url = `https://api.themoviedb.org/3/movie/${id}/credits?language=pt-br`;
     
-  //   return fetch(url, this.obterHeaderAutorizacao())
-  //   .then((res: Response): Promise<any> => this.processarResposta(res))
-  //   .then((obj: any): CreditosFilme[] => this.mapearCreditosFilme(obj.results));
-  // }
+    return fetch(url, this.obterHeaderAutorizacao())
+    .then((res: Response): Promise<any> => this.processarResposta(res))
+    .then((obj: any): CreditosFilme[] => this.mapearCreditosFilme(obj.cast));
+  }
 
-
-
-
-  // private mapearCreditosFilme(results: any): CreditosFilme[] {
-  //   console.log("MapeadorCreditoFilme", results)
-  //   return results.filter((res: any) => {
-  //     console.log("MapeadorCreditoFilme Objeto", res)
-
-  //     return new CreditosFilme(
-  //       res.id,
-  //       res.name,
-  //       res.department,
-  //       res.profile_path,
-  //       res.character
-  //     )
-  //   })
-  // }
+  private mapearCreditosFilme(listaCreditos: any): CreditosFilme[] {
+    console.log("Lista CreditoFilme", listaCreditos)
+    return listaCreditos.map((res: any) => {
+      console.log("MapeadorCreditoFilme Objeto", res)
+      return new CreditosFilme(
+        res.id,
+        res.name,
+        res.character,
+        res.known_for_department,
+        res.profile_path
+      )
+    })
+  }
   
   private mapearListaFilmes(filmes: any): Filme[] {
     return filmes.map((filme: any) => {
@@ -77,7 +73,6 @@ export class FilmeService {
   }
   
   private mapearDetalheFilme(obj: any): DetalhesFilme {
-    console.log("mapeadordf", obj)
     return new DetalhesFilme (
       obj.id,
       obj.title,

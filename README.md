@@ -28,6 +28,14 @@ Na pasta do projeto, instale as dependências:
 npm install
 ```
 
+<h2 align="center">Link</h2>
+
+:
+
+```bash
+https://daviborgesfelipe.github.io/gerenciado-cinema/
+```
+
 <h2 align="center">Como executar</h2>
 
 Servidor de desenvolvimento webpack:

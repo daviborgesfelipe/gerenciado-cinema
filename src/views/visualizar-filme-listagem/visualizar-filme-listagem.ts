@@ -17,7 +17,6 @@ export class VisualizarListagemFilmes {
   }
 
   private exibirFilmesPorPopularidade(filmes: Filme[]): void{
-    console.log("exibirFilmesPorPopilaridade", filmes)
     const lbSessaoPagina = document.createElement("h2")
     lbSessaoPagina.textContent = "Filmes em Alta";
     lbSessaoPagina.classList.add(
@@ -56,7 +55,6 @@ export class VisualizarListagemFilmes {
       const imgFilme = document.createElement("img");
       imgFilme.classList.add("img-fluid", "rounded-3")
       imgFilme.src = `https://image.tmdb.org/t/p/original${filme.urlPoster}`;
-      console.log("IMAGEM FILME",imgFilme.src)
 
       const lbTituloFilme = document.createElement("a");
       lbTituloFilme.classList.add(

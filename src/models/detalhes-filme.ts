@@ -32,8 +32,5 @@ export class DetalhesFilme {
     this.mediaNota = mediaNota;
     this.contageVotos = contageVotos;
     this.genero = genero;     
-
-    console.log(this.genero)
-    console.log(genero)
   }
 }

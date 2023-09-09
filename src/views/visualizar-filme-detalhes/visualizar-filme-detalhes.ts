@@ -15,6 +15,7 @@ export class VisualizarDetalhesFilme {
   pnlTrailer: HTMLDivElement;
   pnlGenero: HTMLDivElement;
   pnlDescricao: HTMLDivElement;
+  pnlCredito: HTMLDivElement;
 
   filmeService: FilmeService
 
@@ -33,9 +34,9 @@ constructor() {
   let idCaminho: number = parseInt(url.get("id") as string) 
   this.id = idCaminho;
 
-  // this.filmeService.selecionarCreditosFilmePorId(idCaminho)
-  // .then((credito: any) => this.testeCredito = credito as CreditosFilme)
-  // .then(credito => this.exibirCredito(credito)
+  this.filmeService.selecionarCreditosFilmePorId(idCaminho)
+  .then((credito: any) => this.testeCredito = credito as CreditosFilme)
+  .then((credito: any) => this.exibirCredito(credito))
 
   this.filmeService.selecionarFilmePorId(idCaminho)
   .then((filme: DetalhesFilme) => this.testeDetalhes = filme as DetalhesFilme)
@@ -56,20 +57,84 @@ registrarElementos(): void {
   this.pnlTrailer = document.getElementById("pnlTrailer") as HTMLDivElement;
   this.pnlGenero = document.getElementById("pnlGenero") as HTMLDivElement;
   this.pnlDescricao = document.getElementById("pnlDescricao") as HTMLDivElement;
+  this.pnlCredito = document.getElementById("pnlCredito") as HTMLDivElement;
 }
 
-exibirCredito(credito: CreditosFilme[]): any {
-  throw new Error('Method not implemented.');
+
+exibirCredito(creditos: CreditosFilme[]): void {
+  const creditosPorDepartamento: { [departamento: string]: string[] } = {};
+  creditos.forEach((credito) => {
+    const departamento = credito.departamento;
+
+    if (!creditosPorDepartamento[departamento]) {
+      creditosPorDepartamento[departamento] = [];
+    }
+
+    creditosPorDepartamento[departamento].push(credito.nome);
+  });
+
+  const tabelaCredito = document.createElement("table");
+  tabelaCredito.classList.add(
+    "table",
+    "table-secondary",
+    "fs-5",
+    "text-dark",
+    "bg-warning",
+    "rounded-3",
+    "fw-bolder",
+    "table-striped"
+  );
+
+  const theadCredito = document.createElement("thead");
+  const trCabecalho = document.createElement("tr");
+
+  const thDepartamento = document.createElement("th");
+  thDepartamento.scope = "col";
+  thDepartamento.innerText = "Departamento";
+
+  const thNomes = document.createElement("th");
+  thNomes.scope = "col";
+  thNomes.innerText = "Nomes";
+  thNomes.classList.add("text-end")
+
+  trCabecalho.appendChild(thDepartamento);
+  trCabecalho.appendChild(thNomes);
+  theadCredito.appendChild(trCabecalho);
+  tabelaCredito.appendChild(theadCredito);
+
+  const tbodyCredito = document.createElement("tbody");
+
+  for (const departamento in creditosPorDepartamento) {
+    if (creditosPorDepartamento.hasOwnProperty(departamento)) {
+      const trDepartamento = document.createElement("tr");
+
+      const tdDepartamento = document.createElement("td");
+      tdDepartamento.innerText = departamento;
+
+      trDepartamento.appendChild(tdDepartamento);
+
+      const tdNomes = document.createElement("td");
+      tdNomes.innerText = creditosPorDepartamento[departamento].join(" - "); // Concatena os nomes
+      tdNomes.classList.add("text-end")
+      trDepartamento.appendChild(tdNomes);
+
+      tbodyCredito.appendChild(trDepartamento);
+    }
+  }
+
+  tabelaCredito.appendChild(tbodyCredito);
+
+  this.pnlCredito.classList.add("rounded-3");
+  this.pnlCredito.appendChild(tabelaCredito);
 }
 
 
 exibirFilme(filme: DetalhesFilme): any {
-  this.exibirCabecalhoFilme(filme)
+  this.exibirDetalhesFilme(filme)
   this.exibirConteudo(filme)
 }
 
-exibirCabecalhoFilme(filme: DetalhesFilme): any {
-  console.log("Filme", filme.titulo)
+exibirDetalhesFilme(filme: DetalhesFilme): any {
   const lbTituloFilme = document.createElement("h1");
   lbTituloFilme.textContent = filme.titulo;
   lbTituloFilme.classList.add(
@@ -78,16 +143,26 @@ exibirCabecalhoFilme(filme: DetalhesFilme): any {
     "text-warning"
   )
   
+  const lbNota = document.createElement("p")
+  lbNota.textContent= `${filme.mediaNota.toPrecision(3)}/10.0`
+  lbNota.classList.add("text-warning")
+
   const lbVotos = document.createElement("p");
   lbVotos.textContent = `${filme.contageVotos} votos`
   lbVotos.classList.add("text-warning")
   
   const iconFavorito = document.createElement("i")
-  iconFavorito.classList.add("bi", "bi-heart", "fs-2", "text-warning")
+  iconFavorito.classList.add(
+    "bi",
+    "bi-heart",
+    "fs-2",
+    "text-warning"
+  )
   
   const divFavoritos = document.createElement("div")
   divFavoritos.classList.add("ms-auto", "text-end")
   
+  divFavoritos.appendChild(lbNota)
   divFavoritos.appendChild(lbVotos)
   divFavoritos.appendChild(iconFavorito)
   
@@ -118,10 +193,8 @@ exibirCabecalhoFilme(filme: DetalhesFilme): any {
   )
   paragrafoVisaoGeral.innerText = filme.visaoGeral;
   
-  for (let index = 0; index < filme.genero.length; index++) {
-    console.log("Filme", filme.genero.length)
+  for (let contador = 0; contador < filme.genero.length; contador++) {
     const genero =  filme.genero;
-    console.log("aqui", genero)
     let spanGenero = document.createElement("span")
     spanGenero.classList.add(
       "fs-5",
@@ -131,7 +204,7 @@ exibirCabecalhoFilme(filme: DetalhesFilme): any {
       "text-dark",
       "my-2"
     )
-    spanGenero.innerText = genero[index];
+    spanGenero.innerText = genero[contador];
     this.pnlGenero.appendChild(spanGenero)
   }
     
