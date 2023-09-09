@@ -20,18 +20,18 @@
 
 
 
+<h2 align="center">Link GitHub Pages</h2>
+
+```bash
+https://daviborgesfelipe.github.io/gerenciado-cinema/
+```
+
 <h2 align="center">Setup</h2>
 
 Na pasta do projeto, instale as dependências:
 
 ```bash
 npm install
-```
-
-<h2 align="center">Link GitHub Pages</h2>
-
-```bash
-https://daviborgesfelipe.github.io/gerenciado-cinema/
 ```
 
 <h2 align="center">Como executar</h2>
