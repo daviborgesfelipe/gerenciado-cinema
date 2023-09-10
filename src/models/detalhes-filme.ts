@@ -27,8 +27,8 @@ export class DetalhesFilme {
     this.titulo = titulo;
     this.visaoGeral = visaoGeral;
     this.dataLancamento = dataLancamento;
-    this.urlPoster = `https://image.tmdb.org/t/p/original${urlPoster}`;
-    this.urlSlide = `https://image.tmdb.org/t/p/original${urlSlide}`;
+    this.urlPoster = urlPoster;
+    this.urlSlide = urlSlide;
     this.mediaNota = mediaNota;
     this.contageVotos = contageVotos;
     this.genero = genero;     

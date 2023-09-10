@@ -18,11 +18,5 @@ export class CreditosFilme {
     this.personagem = personagem; 
     this.departamento = departamento;
     this.caminho_imagem = caminho_imagem;
-
-    console.log("id", this.ordem)
-    console.log("nome", this.nome)
-    console.log("personagem", this.personagem)
-    console.log("departamento", this.departamento)
-    console.log("caminhoImg", this.caminho_imagem)
   }
 }

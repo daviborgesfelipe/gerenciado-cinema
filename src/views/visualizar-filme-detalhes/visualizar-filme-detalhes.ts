@@ -44,9 +44,7 @@ constructor() {
 
   this.filmeService.selecionarTrailerFilmePorId(idCaminho)
   .then((trailer: any) => this.testeTreiler = trailer as TrailerFilme)
-  .then(trailer => this.exibirTreiler(trailer))
-
-  console.log(this.testeDetalhes)
+  .then(trailer => this.exibirTreiler(trailer as any))
 }
 
 registrarElementos(): void {
@@ -147,7 +145,7 @@ exibirDetalhesFilme(filme: DetalhesFilme): any {
   )
   
   const lbNota = document.createElement("p")
-  lbNota.textContent= `${filme.mediaNota.toPrecision(3)}/10.0`
+  lbNota.textContent= `${filme.mediaNota.toPrecision(3)}/10.00`
   lbNota.classList.add("text-warning")
 
   const lbVotos = document.createElement("p");
@@ -167,9 +165,9 @@ exibirDetalhesFilme(filme: DetalhesFilme): any {
   
   const divFavoritos = document.createElement("div")
   divFavoritos.classList.add(
-  "ms-auto",
-  "text-end",
-  "w-50"
+    "ms-auto",
+    "text-end",
+    "w-50"
   )
   
   divFavoritos.appendChild(lbNota)
@@ -196,7 +194,8 @@ exibirDetalhesFilme(filme: DetalhesFilme): any {
   
   const cabelhado = document.createElement("div")
   cabelhado.classList.add(
-    "row", "justify-content-between"
+    "row",
+    "justify-content-between"
   )
   
   cabelhado.appendChild(conteudoCabecalho)
@@ -235,15 +234,20 @@ exibirVisalGeralGenero(filme: DetalhesFilme){
   this.pnlDescricao.appendChild(paragrafoVisaoGeral)
 }
 
-exibirTreiler(trailer: TrailerFilme): any {
+exibirTreiler(trailers: TrailerFilme[]): any {
+  let trailer = trailers.find(teste => teste.sourceUrl)
   const iframeVideo = document.createElement("iframe")
   iframeVideo.allowFullscreen = true;
-  iframeVideo.src = `https://www.youtube.com/embed/${trailer.sourceUrl}?controls=0`;
+  iframeVideo.src = `https://www.youtube.com/embed/${trailer?.sourceUrl}?controls=0`;
   iframeVideo.setAttribute("frameborder", "0");
   iframeVideo.classList.add("rounded-3")
 
   const divTrailer = document.createElement("div");
-  divTrailer.classList.add("ratio", "ratio-21x9", "h-100")
+  divTrailer.classList.add(
+    "ratio",
+    "ratio-21x9",
+    "h-100"
+  )
   divTrailer.appendChild(iframeVideo);
 
   const imgVideo = document.createElement("div")
@@ -256,7 +260,10 @@ exibirTreiler(trailer: TrailerFilme): any {
 
 exibirConteudo(filme: DetalhesFilme) {
   const imagemFilme = document.createElement("img")
-  imagemFilme.classList.add("img-fluid", "rounded-3")
+  imagemFilme.classList.add(
+    "img-fluid",
+    "rounded-3"
+  )
   imagemFilme.src = `https://image.tmdb.org/t/p/original${filme.urlPoster}`;
   
   const divImg = document.createElement("div")

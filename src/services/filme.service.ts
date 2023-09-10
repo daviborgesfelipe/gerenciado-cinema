@@ -9,10 +9,10 @@ export class FilmeService {
 
   constructor()
   {
-    fetch(`https://api.themoviedb.org/3/movie/61656/credits`,
+    fetch(`https://api.themoviedb.org/3/movie/615656/videos`,
     this.obterHeaderAutorizacao())
       .then((res) => res.json())
-      .then((obj) => console.log("testeMovieApi", obj))
+      .then((obj) => console.log("testeMovieApi", obj.results))
   }
   
   public selecionarFilmePorPopularidade(): Promise<Filme[]> {
@@ -48,9 +48,7 @@ export class FilmeService {
   }
 
   private mapearCreditosFilme(listaCreditos: any): CreditosFilme[] {
-    console.log("Lista CreditoFilme", listaCreditos)
     return listaCreditos.map((res: any) => {
-      console.log("MapeadorCreditoFilme Objeto", res)
       return new CreditosFilme(
         res.id,
         res.name,
