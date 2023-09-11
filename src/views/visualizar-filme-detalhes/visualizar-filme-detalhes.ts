@@ -93,10 +93,6 @@ export class VisualizarDetalhesFilme {
     this.localStorageService.salvarDados(filmeFav)
   }
 
-  encontrarObjetoPorId(lista: Filme[], idProcurado: number): Filme | undefined {
-    return lista.find(objeto => objeto.id === idProcurado);
-  }
-
   atualizarListaFavoritos(): void {
     if(this.listaFavoritos.ids.includes(this.id)) {
       this.listaFavoritos.ids = this.listaFavoritos.ids.filter(x => x != this.id);
@@ -118,18 +114,6 @@ export class VisualizarDetalhesFilme {
       lblFavorito.className = "bi bi-heart fs-2 text-light";
     }
   }
-
-
-
-
-
-
-
-
-
-
-
-
 
   exibirDetalhesFilme(filme: DetalhesFilme): any {
 
@@ -154,7 +138,6 @@ export class VisualizarDetalhesFilme {
     )
     
     const iconFavorito = document.createElement("i")
-    // const objetoEncontrado = this.encontrarObjetoPorId(this.localStorageService.carregarDados(), filme.id);
     iconFavorito.classList.add(
       "bi",
       "bi-heart",
@@ -163,29 +146,6 @@ export class VisualizarDetalhesFilme {
     )
     iconFavorito.id = "iconFav"
     iconFavorito.addEventListener("click", () => this.atualizarListaFavoritos())
-    // iconFavorito.addEventListener("click", function() {
-    //   if (filme.fav == false) {
-    //     iconFavorito.classList.remove("bi-heart");
-    //     iconFavorito.classList.add("bi-heart-fill");
-        
-    //     filme.fav = true
-    //   } else {
-    //     iconFavorito.classList.remove("bi-heart-fill");
-    //     iconFavorito.classList.add("bi-heart");
-
-    //     filme.fav = false
-    //   }
-    // });
-
-
-    // iconFavorito.addEventListener('click', () => {
-    //   if(filme.fav === true){
-    //     this.salvarNaListaFav(filme)
-    //   }
-    //   if(filme.fav === false){
-    //     this.removerNaListaFav(filme)
-    //   }
-    // })
 
     iconFavorito.addEventListener("mouseenter", function() {
       iconFavorito.style.cursor = "pointer";
