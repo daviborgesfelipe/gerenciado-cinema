@@ -12,6 +12,8 @@ export class DetalhesFilme {
 
   genero: string[];
 
+  fav: boolean
+
   constructor(
     id: number,
     titulo: string,
@@ -31,6 +33,7 @@ export class DetalhesFilme {
     this.urlSlide = urlSlide;
     this.mediaNota = mediaNota;
     this.contageVotos = contageVotos;
-    this.genero = genero;     
+    this.genero = genero;   
+    this.fav = false  
   }
 }

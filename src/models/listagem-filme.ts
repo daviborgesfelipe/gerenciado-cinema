@@ -4,6 +4,8 @@ export class Filme {
   visaoGeral: string;
   urlPoster: string;
 
+  fav: boolean
+
   readonly urlDetalhes: string;
 
   constructor(id: number, titulo: string, visaoGeral: string, urlPoster: string) {

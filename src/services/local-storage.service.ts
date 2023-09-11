@@ -1,21 +1,21 @@
 import { Filme } from "../models/listagem-filme";
+import { FilmesFavoritos } from "../models/listagem-favoritos-filmes";
 
 export class LocalStorageService {
-  listaFavoritos: Filme[] = [];
-  endereco: string = 'termo-ts:historico@1.0.0'
+  endereco: string = 'code-cine:historico@1.0.1'
+  favoritos: FilmesFavoritos;
 
-  salvarDados(dados: Filme): void {
-    this.listaFavoritos.push(dados)
-    const jsonString = JSON.stringify(this.listaFavoritos)
+  salvarDados(dados: FilmesFavoritos): void {
+    const jsonString = JSON.stringify(dados)
     localStorage.setItem(this.endereco, jsonString)
-  }
+  } 
 
-  carregarDados(): Filme[] {
+  carregarDados(): FilmesFavoritos {
     const dadosJson = localStorage.getItem(this.endereco);
-    
-    if (dadosJson)
-      return JSON.parse(dadosJson) as Filme[];
 
-    return this.listaFavoritos
+    if (dadosJson)
+      return JSON.parse(dadosJson) as FilmesFavoritos;
+
+    return new FilmesFavoritos();
   }
 }

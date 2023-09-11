@@ -4,17 +4,17 @@ import { TrailerFilme } from "../models/trailer-filme";
 import { CreditosFilme } from "../models/creditos-filme";
 
 import {API_KEY} from "../../secrets"
+import { LocalStorageService } from "./local-storage.service";
 
 export class FilmeService {
-
   constructor()
   {
-    fetch(`https://api.themoviedb.org/3/movie/615656/videos`,
-    this.obterHeaderAutorizacao())
-      .then((res) => res.json())
-      .then((obj) => console.log("testeMovieApi", obj.results))
+    // fetch(`https://api.themoviedb.org/3/movie/615656/videos`,
+    // this.obterHeaderAutorizacao())
+    // .then((res) => res.json())
+    // .then((obj) => console.log("testeMovieApi", obj.results))
   }
-  
+
   public selecionarFilmePorPopularidade(): Promise<Filme[]> {
     const url = `https://api.themoviedb.org/3/movie/popular?language=pt-br`;
     
@@ -23,12 +23,20 @@ export class FilmeService {
     .then((obj: any): Filme[] => this.mapearListaFilmes(obj.results));
   }
 
+  public selecionarFilmes(): Promise<any[]> {
+    const url = "https://api.themoviedb.org/3/movie/popular?language=pt-BR&page=1";
+
+    return fetch(url, this.obterHeaderAutorizacao())
+    .then((res: Response): Promise<Filme> => this.processarResposta(res))
+    .then((obj: any): Filme[] => this.mapearListaFilmes(obj.results));
+  }
+  
   public selecionarFilmePorId(id: number): Promise<DetalhesFilme> {
     const url = `https://api.themoviedb.org/3/movie/${id}?language=pt-br`;
 
     return fetch(url, this.obterHeaderAutorizacao())
-        .then((res): Promise<any> => this.processarResposta(res))
-        .then((obj: any): DetalhesFilme => this.mapearDetalheFilme(obj));
+    .then((res): Promise<any> => this.processarResposta(res))
+    .then((obj: any): DetalhesFilme => this.mapearDetalheFilme(obj));
   }
 
   public selecionarTrailerFilmePorId(id: number): Promise<TrailerFilme[]> {
@@ -46,6 +54,11 @@ export class FilmeService {
     .then((res: Response): Promise<any> => this.processarResposta(res))
     .then((obj: any): CreditosFilme[] => this.mapearCreditosFilme(obj.cast));
   }
+
+  public selecionarFilmesPorIds(ids: number[]): Promise<DetalhesFilme[]> {
+    const filmes = ids.map(id => this.selecionarFilmePorId(id));
+    return Promise.all(filmes);
+  } 
 
   private mapearCreditosFilme(listaCreditos: any): CreditosFilme[] {
     return listaCreditos.map((res: any) => {
@@ -80,7 +93,7 @@ export class FilmeService {
       obj.poster_path,
       obj.vote_average,
       obj.vote_count,
-      obj.genres.map((genre: any) => genre.name)
+      obj.genres.map((genre: any) => genre.name),
     )
   }
   
@@ -92,8 +105,6 @@ export class FilmeService {
       )
     })
   }
-  
-
 
   private obterHeaderAutorizacao(){
     return     {
